@@ -1,7 +1,9 @@
 import { Button, Grid, Typography } from "@mui/material";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import { useNavigate } from "react-router-dom";
 
 export default function HeroSection() {
+  const navigate = useNavigate()
   return (
     <>
       <Grid
@@ -28,6 +30,7 @@ export default function HeroSection() {
             variant="contained"
             fontFamily={"sans-serif Teko"}
             sx={{ padding: 2, fontWeight: 600, fontSize: 16 }}
+            onClick={()=>navigate('/products')}
           >
             EXPLORE MORE
           </Button>

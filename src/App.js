@@ -7,6 +7,7 @@ import About from "./pages/About";
 import Products from "./pages/Products";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
+import Product from "./pages/Product";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route element={<Home />} path="" />
             <Route element={<About />} path="about" />
             <Route element={<Products />} path="products" />
+            <Route element={<Product />} path="products/:id" />
             <Route element={<Cart />} path="cart" />
             <Route element={<Profile />} path="profile" />
           </Route>
