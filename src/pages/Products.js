@@ -12,25 +12,77 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import StarIcon from "@mui/icons-material/Star";
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { useNavigate } from "react-router-dom";
+import ProductCard from "../components/ProductCard";
+import Filters from "../components/Filters";
 
 export default function Products() {
-  const navigate = useNavigate();
   const [productsData, setProductsData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const handleChange = (event, value) => {
     setPage(value);
   };
-
+  const getSearchProducts = async () => {
+    try {
+      setLoading(true);
+      const result = await axios.get(
+        `https://dummyjson.com/products/search?q=${search}`
+      );
+      if (result.status === 200) {
+        setProductsData(result.data);
+      } else {
+        setProductsData([]);
+      }
+      setLoading(false);
+      setError(false);
+      setErrorMessage("");
+    } catch (error) {
+      if (!axios.isCancel(error)) {
+        setProductsData([]);
+        setLoading(false);
+        setError(true);
+        setErrorMessage(error.response.data);
+      }
+    }
+  };
+  const getCategoryProducts = async (category) => {
+    try {
+      setLoading(true);
+      setSelectedCategory(category);
+      const result = await axios.get(
+        `https://dummyjson.com/products/category/${category}`
+      );
+      if (result.status === 200) {
+        setProductsData(result.data);
+      } else {
+        setProductsData([]);
+      }
+      setLoading(false);
+      setError(false);
+      setErrorMessage("");
+    } catch (error) {
+      if (!axios.isCancel(error)) {
+        setProductsData([]);
+        setLoading(false);
+        setError(true);
+        setErrorMessage(error.response.data);
+      }
+    }
+  };
+  const clearCategories = () => {
+    setSearch("");
+    setSelectedCategory("");
+    getAllProducts();
+  };
   const getAllProducts = async () => {
     try {
+      setLoading(true);
       const result = await axios.get(
         `https://dummyjson.com/products?limit=${pageSize}&skip=${
           pageSize * (page - 1)
@@ -98,10 +150,14 @@ export default function Products() {
 
   return (
     <Grid container padding={3}>
-      <Grid item xs={2} height="50%">
-        <Typography>Filters</Typography>
-      </Grid>
-
+      <Filters
+        setSearch={setSearch}
+        search={search}
+        selectedCategory={selectedCategory}
+        getSearchProducts={getSearchProducts}
+        getCategoryProducts={getCategoryProducts}
+        clearCategories={clearCategories}
+      />
       <Grid item xs={10}>
         <Grid
           container
@@ -111,37 +167,7 @@ export default function Products() {
           gap={2}
         >
           {productsData?.products?.map((each) => (
-            <Grid
-              key={each?.id}
-              item
-              xs={12}
-              md={2}
-              padding={2}
-              boxShadow={3}
-              borderRadius={2}
-              onClick={() => navigate(`${each?.id}`)}
-              sx={{ cursor: "pointer" }}
-            >
-              <div>
-                <img
-                  src={each?.images[0]}
-                  alt="Item-Image"
-                  width={160}
-                  height={200}
-                />
-              </div>
-              <Typography variant="body2" fontWeight={600}>
-                {each?.title}
-              </Typography>
-              <Grid item display={"flex"} flexDirection={"row"}>
-                <Typography variant="body2">{each?.rating}</Typography>
-                <StarIcon fontSize="small" color="warning"  />
-              </Grid>
-              <Grid item display={"flex"} flexDirection={"row"}>
-                <CurrencyRupeeIcon fontSize="small" />
-                <Typography variant="body2">{each?.price}</Typography>
-              </Grid>
-            </Grid>
+            <ProductCard key={each?.id} productDetails={each} />
           ))}
         </Grid>
         <Grid

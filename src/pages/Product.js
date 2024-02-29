@@ -121,11 +121,9 @@ export default function Product() {
           </Typography>
         </Grid>
         <Grid item>
-          <Typography variant="p">Rating</Typography>
+          <Typography variant="p" fontWeight={'bold'}>Rating</Typography>
           <Grid item display={"flex"} flexDirection={"row"}>
             <Rating name="read-only" value={productData?.rating} readOnly />
-            {/* <Typography variant="p">{productData?.rating}</Typography>
-            <StarIcon fontSize="small" /> */}
           </Grid>
         </Grid>
         <Grid item display={"flex"} flexDirection={"row"} columnGap={3}>

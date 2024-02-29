@@ -12,7 +12,7 @@ export default function Footer() {
       <footer>
         <Grid
           container
-          style={{ backgroundColor: "#565252" }}
+          style={{ backgroundColor: "#282323" }}
           display={"flex"}
           flexDirection={"row"}
           padding={3}
