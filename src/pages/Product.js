@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { CircularProgress, Grid, Rating, Typography } from "@mui/material";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import axios from "axios";
-import StarIcon from "@mui/icons-material/StarBorder";
 import Button from "@mui/material/Button";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
@@ -88,7 +87,7 @@ export default function Product() {
       <Grid container xs={7} display={"flex"} flexDirection={"row"} padding={2}>
         {productData?.images?.map((each) => (
           <Grid item key={each} paddingRight={1} paddingBottom={1}>
-            <img src={each} alt="Item-Image" height={420} width={365} />
+            <img src={each} alt="Item" height={420} width={365} />
           </Grid>
         ))}
       </Grid>
@@ -121,7 +120,9 @@ export default function Product() {
           </Typography>
         </Grid>
         <Grid item>
-          <Typography variant="p" fontWeight={'bold'}>Rating</Typography>
+          <Typography variant="p" fontWeight={"bold"}>
+            Rating
+          </Typography>
           <Grid item display={"flex"} flexDirection={"row"}>
             <Rating name="read-only" value={productData?.rating} readOnly />
           </Grid>
@@ -129,13 +130,10 @@ export default function Product() {
         <Grid item display={"flex"} flexDirection={"row"} columnGap={3}>
           <Button
             startIcon={<ShoppingCartIcon fontSize="medium" />}
-            variant="contained"
+            variant="outlined"
             sx={{
-              backgroundColor: "#ff9f00",
               padding: 2,
-              fontweight: "bold",
-              fontSize: 18,
-              alignItems: "center",
+              fontSize: 14,
             }}
           >
             Add to Cart
@@ -144,15 +142,22 @@ export default function Product() {
             startIcon={<FlashOnIcon fontSize="medium" />}
             variant="contained"
             sx={{
-              backgroundColor: "#fb641b",
               padding: 2,
-              fontweight: "bold",
-              fontSize: 18,
-              alignItems: "center",
+              fontSize: 14,
             }}
           >
             Buy Now!
           </Button>
+        </Grid>
+        <Grid item>
+          <Typography color={"grey"}>100% Original Products</Typography>
+          <Typography color={"grey"}>
+            Pay on delivery might be available
+          </Typography>
+          <Typography color={"grey"}>
+            Easy 14 days returns and exchanges
+          </Typography>
+          <Typography color={"grey"}>Try & Buy might be available</Typography>
         </Grid>
       </Grid>
     </Grid>

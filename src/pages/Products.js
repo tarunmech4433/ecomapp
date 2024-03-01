@@ -166,49 +166,69 @@ export default function Products() {
           justifyContent={"space-around"}
           gap={2}
         >
-          {productsData?.products?.map((each) => (
-            <ProductCard key={each?.id} productDetails={each} />
-          ))}
+          {productsData?.total > 0 ? (
+            productsData?.products?.map((each) => (
+              <>
+                <ProductCard key={each?.id} productDetails={each} />
+              </>
+            ))
+          ) : (
+            <Grid
+              container
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              height="90vh"
+            >
+              <Grid item>
+                <Typography color={"primary"} variant="h5">
+                  Products Not Found
+                </Typography>
+              </Grid>
+            </Grid>
+          )}
         </Grid>
-        <Grid
-          container
-          marginBottom={2}
-          marginTop={3}
-          display="flex"
-          flexDirection={"row"}
-          justifyContent={"space-between"}
-          gap={2}
-        >
-          <Grid item>
-            <Stack spacing={2} marginTop={2}>
-              <Pagination
-                count={Math.ceil(productsData?.total / pageSize)}
-                page={page}
-                onChange={handleChange}
-              />
-            </Stack>
+        {productsData?.total > 0 && (
+          <Grid
+            container
+            marginBottom={2}
+            marginTop={3}
+            display="flex"
+            flexDirection={"row"}
+            justifyContent={"space-between"}
+            gap={2}
+          >
+            <Grid item>
+              <Stack spacing={2} marginTop={2}>
+                <Pagination
+                  count={Math.ceil(productsData?.total / pageSize)}
+                  page={page}
+                  onChange={handleChange}
+                />
+              </Stack>
+            </Grid>
+            <Grid item>
+              <Box sx={{ width: 120, height: 10 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Rows per page
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={pageSize}
+                    label="Rows per page"
+                    onChange={(e) => setPageSize(e.target.value)}
+                  >
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Box sx={{ width: 120, height: 10 }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Rows per page
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={pageSize}
-                  label="Rows per page"
-                  onChange={(e) => setPageSize(e.target.value)}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-          </Grid>
-        </Grid>
+        )}
       </Grid>
     </Grid>
   );

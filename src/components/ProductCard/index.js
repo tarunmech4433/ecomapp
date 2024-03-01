@@ -21,7 +21,7 @@ export default function ProductCard({ productDetails }) {
         sx={{ cursor: "pointer" }}
       >
         <div>
-          <img src={thumbnail} alt="thumbnail" width={160} height={200} />
+          <img src={thumbnail} alt="thumbnail" width={150} height={200} />
         </div>
         <Typography variant="body2" fontWeight={600}>
           {title}
